@@ -1,0 +1,94 @@
+/* Resetting some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic layout for the container */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Header Styling */
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #444;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Graph Canvas Styling */
+canvas {
+    display: block;
+    width: 100%;
+    height: 400px; /* Increased height for better visibility */
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+/* Add spacing for additional elements */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Placeholder text for inputs */
+input::placeholder {
+    color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    canvas {
+        height: 300px; /* Adjust graph height for smaller screens */
+    }
+}

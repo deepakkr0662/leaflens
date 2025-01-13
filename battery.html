@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Status</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Battery Status</h1>
+        <canvas id="batteryChart"></canvas>
+        <button onclick="goBack()">Back to Menu</button>
+    </div>
+
+    <script>
+        // Sample battery data for two devices
+        const batteryData = [
+            { timestamp: "2025-01-12T16:36:34Z", device_id: "device1", battery_percentage: 6 },
+            { timestamp: "2025-01-12T16:36:34Z", device_id: "device2", battery_percentage: 51 },
+            { timestamp: "2025-01-12T17:36:34Z", device_id: "device1", battery_percentage: 15 },
+            { timestamp: "2025-01-12T17:36:34Z", device_id: "device2", battery_percentage: 79 },
+            { timestamp: "2025-01-12T18:36:34Z", device_id: "device1", battery_percentage: 39 },
+            { timestamp: "2025-01-12T18:36:34Z", device_id: "device2", battery_percentage: 16 },
+            { timestamp: "2025-01-12T19:36:34Z", device_id: "device1", battery_percentage: 35 },
+            { timestamp: "2025-01-12T19:36:34Z", device_id: "device2", battery_percentage: 57 },
+            { timestamp: "2025-01-12T20:36:34Z", device_id: "device1", battery_percentage: 24 },
+            { timestamp: "2025-01-12T20:36:34Z", device_id: "device2", battery_percentage: 51 }
+        ];
+
+        // Group data by device
+        const device1Data = batteryData.filter(data => data.device_id === "device1");
+        const device2Data = batteryData.filter(data => data.device_id === "device2");
+
+        // Extract data for chart
+        const timestamps = device1Data.map(data => new Date(data.timestamp).toLocaleTimeString());
+        const batteryPercentagesDevice1 = device1Data.map(data => data.battery_percentage);
+        const batteryPercentagesDevice2 = device2Data.map(data => data.battery_percentage);
+
+        // Check for low battery alerts
+        const lowBatteryDevices = batteryData.filter(data => data.battery_percentage < 10);
+        lowBatteryDevices.forEach(device => {
+            alert(`Low battery alert for ${device.device_id}! Battery at ${device.battery_percentage}%`);
+        });
+
+        // Create chart
+        const ctx = document.getElementById('batteryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [
+                    {
+                        label: 'Device 1 Battery (%)',
+                        data: batteryPercentagesDevice1,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    },
+                    {
+                        label: 'Device 2 Battery (%)',
+                        data: batteryPercentagesDevice2,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Timestamp'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Battery Percentage (%)'
+                        },
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Back to menu function
+        function goBack() {
+            window.location.href = "menu.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .tabs button.active {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome</h1>
+        <div class="tabs">
+            <button id="signInTab" class="active" onclick="showForm('signIn')">Sign In</button>
+            <button id="signUpTab" onclick="showForm('signUp')">Sign Up</button>
+        </div>
+
+        <div id="signInForm" class="form-container active">
+            <form action="menu.html">
+                <input type="text" id="signInUsername" placeholder="Username" required>
+                <input type="password" id="signInPassword" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+
+        <div id="signUpForm" class="form-container">
+            <form onsubmit="return validateSignUp()">
+                <input type="text" id="signUpFullName" placeholder="Full Name" required>
+                <input type="email" id="signUpEmail" placeholder="Email Address" required>
+                <input type="text" id="signUpUsername" placeholder="Username" required>
+                <input type="password" id="signUpPassword" placeholder="Password" required>
+                <input type="password" id="signUpConfirmPassword" placeholder="Confirm Password" required>
+                <div id="errorMessage" class="error"></div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between Sign In and Sign Up forms
+        function showForm(formType) {
+            const signInTab = document.getElementById('signInTab');
+            const signUpTab = document.getElementById('signUpTab');
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+
+            if (formType === 'signIn') {
+                signInTab.classList.add('active');
+                signUpTab.classList.remove('active');
+                signInForm.classList.add('active');
+                signUpForm.classList.remove('active');
+            } else {
+                signUpTab.classList.add('active');
+                signInTab.classList.remove('active');
+                signUpForm.classList.add('active');
+                signInForm.classList.remove('active');
+            }
+        }
+
+        // Validate Sign-Up Form
+        function validateSignUp() {
+            const fullName = document.getElementById('signUpFullName').value.trim();
+            const email = document.getElementById('signUpEmail').value.trim();
+            const username = document.getElementById('signUpUsername').value.trim();
+            const password = document.getElementById('signUpPassword').value.trim();
+            const confirmPassword = document.getElementById('signUpConfirmPassword').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Clear previous errors
+            errorMessage.textContent = '';
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match.';
+                return false;
+            }
+
+            alert('Sign-Up Successful!');
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>

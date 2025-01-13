@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humidity Graph</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Humidity Data</h1>
+        <canvas id="humidityChart"></canvas>
+        <button onclick="goBack()">Back to Menu</button>
+    </div>
+
+    <script>
+        // Sample humidity data for two devices
+        const humidityData = [
+            { timestamp: "2025-01-12T16:36:34Z", device_id: "device1", humidity: 65 },
+            { timestamp: "2025-01-12T16:36:34Z", device_id: "device2", humidity: 50 },
+            { timestamp: "2025-01-12T17:36:34Z", device_id: "device1", humidity: 83 },
+            { timestamp: "2025-01-12T17:36:34Z", device_id: "device2", humidity: 84 },
+            { timestamp: "2025-01-12T18:36:34Z", device_id: "device1", humidity: 73 },
+            { timestamp: "2025-01-12T18:36:34Z", device_id: "device2", humidity: 80 },
+            { timestamp: "2025-01-12T19:36:34Z", device_id: "device1", humidity: 84 },
+            { timestamp: "2025-01-12T19:36:34Z", device_id: "device2", humidity: 83 },
+            { timestamp: "2025-01-12T20:36:34Z", device_id: "device1", humidity: 72 },
+            { timestamp: "2025-01-12T20:36:34Z", device_id: "device2", humidity: 50 }
+        ];
+
+        // Group data by device
+        const device1Data = humidityData.filter(data => data.device_id === "device1");
+        const device2Data = humidityData.filter(data => data.device_id === "device2");
+
+        // Extract data for chart
+        const timestamps = device1Data.map(data => new Date(data.timestamp).toLocaleTimeString());
+        const humidityValuesDevice1 = device1Data.map(data => data.humidity);
+        const humidityValuesDevice2 = device2Data.map(data => data.humidity);
+
+        // Create chart
+        const ctx = document.getElementById('humidityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [
+                    {
+                        label: 'Device 1 Humidity (%)',
+                        data: humidityValuesDevice1,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    },
+                    {
+                        label: 'Device 2 Humidity (%)',
+                        data: humidityValuesDevice2,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Timestamp'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Humidity (%)'
+                        },
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+
+        // Back to menu function
+        function goBack() {
+            window.location.href = "menu.html";
+        }
+    </script>
+</body>
+</html>
